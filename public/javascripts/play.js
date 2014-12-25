@@ -71,12 +71,12 @@ $(document).ready(function(){
     }
 	// ***** 窗口拖动 ***** start
 	function gs2(d,a){
-	    	if (d.currentStyle) { 
-	      		var curVal=d.currentStyle[a]
-	    	}else{ 
-	      		var curVal=document.defaultView.getComputedStyle(d, null)[a]
-	    	}
-	    	return curVal;
+    	if (d.currentStyle) { 
+      		var curVal=d.currentStyle[a]
+    	}else{ 
+      		var curVal=document.defaultView.getComputedStyle(d, null)[a]
+    	}
+    	return curVal;
 	}	
 	if (window.opera){ 
 		document.write("<input type='hidden' id='Q' value=' '>"); 

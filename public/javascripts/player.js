@@ -1,40 +1,41 @@
-//¶¨Òå²¥·Å¶ÔÏó
+//å®šä¹‰æ’­æ”¾å¯¹è±¡
 var Player = {
-  //ĞèÒª´´½¨µÄaudio¶ÔÏó
+  //éœ€è¦åˆ›å»ºçš„audioå¯¹è±¡
   audioObj:null, 
-  //µ±Ç°²¥·Å¸èÇúµÄË÷ÒıºÅ
+  //å½“å‰æ’­æ”¾æ­Œæ›²çš„ç´¢å¼•å·
   currentId:-1,
-  //²¥·ÅÎÄ¼şÊı×é
+  //æ’­æ”¾æ–‡ä»¶æ•°ç»„
   playList:[],
-  //³õÊ¼»¯player¶ÔÏó£¬´´½¨audio¶ÔÏó£¬°ó¶¨ÊÂ¼ş
+  //åˆå§‹åŒ–playerå¯¹è±¡ï¼Œåˆ›å»ºaudioå¯¹è±¡ï¼Œç»‘å®šäº‹ä»¶
   init:function()
   {
-	 //´´½¨audio¶ÔÏó
+	 //åˆ›å»ºaudioå¯¹è±¡
 	 var aObj = $("<audio id='ai'></audio>");
 	 this.audioObj = aObj[0];	     
   },	 
-  //Çå¿Õ²¥·ÅÁĞ±í
+  //æ¸…ç©ºæ’­æ”¾
   clearList:function(){
 	this.playList.length = 0;
 	this.currentId = -1;
   },
-  //Ìí¼ÓÒôÀÖ
+  //æ·»åŠ éŸ³ä¹
   add:function(name,url)
   {
 	this.playList.push({"name":name,"url":url});
   },
-  //É¾³ıÒôÀÖ
+  //åˆ é™¤éŸ³ä¹
   remove:function(name)
   {
 	delete this.playList[name];
   },
-  //°´Ë÷Òı²¥·ÅÒôÀÖ
+  //æŒ‰ç´¢å¼•æ’­æ”¾éŸ³ä¹
   play:function(index)
   {
 	 var song = null;
+	 var self = this;
 	 if((song=this.playList[index])!=null)
 	   {		
-		 //Èç¹ûµ±Ç°ÒôÀÖ¿ÉÒÔ²¥·Å²¢ÇÒºÍĞèÒª²¥·ÅµÄÒ»ÖÂ£¬Ôò¼ÌĞø²¥·Å£¬·ñÔòÖØĞÂ¼ÓÔØÒôÀÖ
+		 //å¦‚æœå½“å‰éŸ³ä¹å¯ä»¥æ’­æ”¾å¹¶ä¸”å’Œéœ€è¦æ’­æ”¾çš„ä¸€è‡´ï¼Œåˆ™ç»§ç»­æ’­æ”¾ï¼Œå¦åˆ™é‡æ–°åŠ è½½éŸ³ä¹
 		 if(this.audioObj.readyState==4&&this.currentId==index)
 		 {
 			 this.audioObj.play();
@@ -42,36 +43,36 @@ var Player = {
 		 else
 		 {
 			 this.currentId = index;
-			 //ÏÈÍ£Ö¹ÒôÀÖ
+			 //å…ˆåœæ­¢éŸ³ä¹
 			 this.stop();
-			 //ÖØĞÂ¼ÓÔØ
+			 //é‡æ–°åŠ è½½
 			 this.audioObj.src= song.url;
-			 //°ó¶¨¼ÓÔØÍêÊı¾İºó²¥·Å
+			 //ç»‘å®šåŠ è½½å®Œæ•°æ®åæ’­æ”¾
 			 $(this.audioObj).bind("canplaythrough",function(){  			
-				this.play();
+				self.play();
 			 })
 		 }
 	   }
 	 return song;
   },
-  //Í£Ö¹ÒôÀÖ
+  //åœæ­¢éŸ³ä¹
   stop:function()
   {
 	this.audioObj.pause();
   },	 
-  //¸èÇúÁĞ±íÊÇ·ñÎª¿Õ
+  //æ­Œæ›²åˆ—è¡¨æ˜¯å¦ä¸ºç©º
   isEmptyPlayList:function()
   {
 	return this.playList.length == 0;
   },
-  //step:1 ²¥·ÅÏÂÒ»Ê× step:-1 ²¥·ÅÉÏÒ»Ê×
+  //step:1 æ’­æ”¾ä¸‹ä¸€é¦– step:-1 æ’­æ”¾ä¸Šä¸€é¦–
   playStep:function(step)
   {
 	if(this.isEmptyPlayList())
 	{
 	  return null;
 	}
-	//Èç¹ûµ±Ç°²¥·ÅidÎª¿Õ£¬Ôò²¥·ÅµÚÒ»Ê× 
+	//å¦‚æœå½“å‰æ’­æ”¾idä¸ºç©ºï¼Œåˆ™æ’­æ”¾ç¬¬ä¸€é¦– 
 	if(this.currentId == null)
 	{
 	   return this.play(this.playList[0]);
@@ -79,24 +80,24 @@ var Player = {
 	else
 	{
 	   var id = this.currentId;
-	   //1±íÊ¾Ç°½øÒ»Ê×
+	   //1è¡¨ç¤ºå‰è¿›ä¸€é¦–
 	   if(step==1)
 		 {
 		   id = (id<this.playList.length-1)?id+1:0;
 		 }
-	   else if(step==-1) //-1±íÊ¾ºóÍËÒ»Ê×
+	   else if(step==-1) //-1è¡¨ç¤ºåé€€ä¸€é¦–
 		 {
 		   id = (id>0)?id-1:this.playList.length-1;
 		 }		     
 	   return this.play(id);
 	}
   },
-  //²¥·ÅÏÂÒ»Ê×
+  //æ’­æ”¾ä¸‹ä¸€é¦–
   playNext:function()
   {
 	return this.playStep(1);
   },
-  //²¥·ÅÇ°Ò»Ê×
+  //æ’­æ”¾å‰ä¸€é¦–
   playPri:function()
   {
 	return this.playStep(-1);
